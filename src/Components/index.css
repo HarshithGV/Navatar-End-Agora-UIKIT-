@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css?family=Tangerine');
+* {
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+  font-family:'poppins',sans-serif;
+
+}
+html{
+  font-size:62.5%;
+}
+table{
+  margin:5rem auto;
+  border-radius: 2rem;
+  border:1rem hidden #443c68;
+  border-collapse:collapse;
+  box-shadow:0 0 0 1pz black;
+  overflow:hidden;
+  max-width: 80rem;
+
+}
+li,p,a,td{
+  font-size: 1.6rem;
+  line-height: 1.6;
+
+}
+thead{
+  font-size: 10PX;
+  background-color: #443c68;
+  color:#fff;
+}
+th,td{
+  border:2px solid #443c68;
+  min-width: 10rem;
+  padding: 1.5rem;
+  line-height: 1.7;
+}
+td{
+  font-size: 1.4rem;
+}
