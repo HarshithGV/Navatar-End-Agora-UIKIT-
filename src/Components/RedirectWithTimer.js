@@ -9,7 +9,7 @@ const RedirectWithTimer = ({ link, delay }) => {
     return () => clearTimeout(timer);
   }, [link, delay]);
 
-  return <div>You will be redirected to {link} in {delay / 1000} seconds...</div>;
+  return <div>You will be in Navatar call by {delay / 1000} seconds...</div>;
 };
 
 export default RedirectWithTimer;

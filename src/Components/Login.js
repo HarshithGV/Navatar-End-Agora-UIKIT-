@@ -20,7 +20,7 @@ function LoginForm() {
     console.log("password: ", password);
     try {
       const response = await axios.post(
-        "http://navatarbe-env.eba-drviydr6.us-east-2.elasticbeanstalk.com/NavatarLogin",
+        "https://navatar.sangamone.com/NavatarLogin",
         {
           username: username,
           password: password,
