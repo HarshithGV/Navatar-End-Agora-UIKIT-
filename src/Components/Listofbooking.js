@@ -8,7 +8,7 @@ function App() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetch(`http://navatarbe-env.eba-drviydr6.us-east-2.elasticbeanstalk.com/getListOfBookingByIdandDate?booked_date=${booked_date}&navatar_id=${navatar_id}`)
+    fetch(`https://navatar.sangamone.com/getListOfBookingByIdandDate?booked_date=${booked_date}&navatar_id=${navatar_id}`)
       .then((response) => response.json())
       .then((data) => {
         if (Array.isArray(data)) {
