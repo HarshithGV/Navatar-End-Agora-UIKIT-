@@ -1,15 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const RedirectWithTimer = ({ link, delay }) => {
+  const [timeLeft, setTimeLeft] = useState(delay);
+
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prevTime) => prevTime - 1000);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    if (timeLeft === 0) {
       window.location.href = link;
-    }, delay);
+    }
+  }, [timeLeft, link]);
 
-    return () => clearTimeout(timer);
-  }, [link, delay]);
+  const secondsLeft = Math.ceil(timeLeft / 1000);
 
-  return <div>You will be in Navatar call by {delay / 1000} seconds...</div>;
+  return <div>Doctor will be in Navatar call by {secondsLeft} seconds...</div>;
 };
 
 export default RedirectWithTimer;
