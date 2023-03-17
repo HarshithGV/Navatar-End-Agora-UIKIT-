@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
 import RedirectWithTimer from './RedirectWithTimer';
 
+
 function App() {
   const location = useLocation();
   const [booked_date, setInput1] = useState("17-03-2023");
@@ -51,6 +52,9 @@ function App() {
          </tr>
        )}
      </table>
+
+
+     <RedirectWithTimer link="https://react-ts-agora-uikit.vercel.app/" delay={10000} />
     </div>
   );
 }
