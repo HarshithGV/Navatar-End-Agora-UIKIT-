@@ -4,11 +4,11 @@ import RedirectWithTimer from './RedirectWithTimer';
 
 function App() {
   const location = useLocation();
-  const [booked_date, setInput1] = useState("27-02-2023");
+  const [booked_date, setInput1] = useState("17-03-2023");
   const [navatar_id, setInput2] = useState("1");
   const [options, setOptions] = useState();
   const [isOptionSelected, setIsOptionSelected] = useState(false);
-  const [times, setTimes] = useState([]);
+  const [times, setTimes] = useState([])
 
   useEffect(() => {
   
@@ -51,10 +51,6 @@ function App() {
          </tr>
        )}
      </table>
-
-     <br></br><br></br>
-     <h1>Welcome to Navatar Video conferencing Room</h1>
-      <RedirectWithTimer link="https://react-ts-agora-uikit.vercel.app/" delay={10000} />
     </div>
   );
 }
