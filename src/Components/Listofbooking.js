@@ -1,60 +1,84 @@
-import React, { useState, useEffect } from "react";
-import { Outlet, Link, useLocation } from "react-router-dom";
-import RedirectWithTimer from './RedirectWithTimer';
-
+import React, { useState, useEffect } from 'react';
 
 function App() {
-  const location = useLocation();
-  const [booked_date, setInput1] = useState("17-03-2023");
-  const [navatar_id, setInput2] = useState("1");
-  const [options, setOptions] = useState();
-  const [isOptionSelected, setIsOptionSelected] = useState(false);
-  const [times, setTimes] = useState([])
+  const [bookings, setBookings] = useState([]);
+  const [bookingDate, setBookingDate] = useState(new Date().toISOString().slice(0, 10));
+  const [timeLeft, setTimeLeft] = useState('');
 
   useEffect(() => {
-  
-    fetch(`https://navatar.sangamone.com/getListOfBookingByIdandDate?booked_date=${booked_date}&navatar_id=${navatar_id}`)
-      .then((response) => response.json())
-      .then((Actualdata) => {
-        setTimes(Actualdata);
-        
-        console.log(times,"times");
-      })},[]);
-      
+    fetch(`https://navatar.sangamone.com/getListOfBookingByIdandDate?bookingDate=${bookingDate}&navatar_id=1`)
+      .then(response => response.json())
+      .then(data => setBookings(data))
+      .catch(error => console.error(error));
+  }, [bookingDate]);
 
-  const handleSelect = (e) => {
-    setOptions(e.target.value);
-    setIsOptionSelected(true);
-  };
+  useEffect(() => {
+    if (bookings.length > 0) {
+      let nextBookingIndex = 0;
+      const now = new Date().getTime();
+      while (nextBookingIndex < bookings.length && new Date(`${bookingDate} ${bookings[nextBookingIndex].booked_timeSlot}:00`).getTime() < now) {
+        nextBookingIndex++;
+      }
+      if (nextBookingIndex === bookings.length) {
+        setTimeLeft('No more bookings for today.');
+        return;
+      }
+      const nextBookingTime = new Date(`${bookingDate} ${bookings[nextBookingIndex].booked_timeSlot}:00`).getTime();
+      const timer = setInterval(() => {
+        const currentTime = new Date().getTime();
+        if (nextBookingTime < currentTime) {
+          setTimeLeft('Timer has passed.');
+          clearInterval(timer);
+          setBookingDate(new Date(currentTime).toISOString().slice(0, 10));
+        } else {
+          const timeDiff = nextBookingTime - currentTime;
+          const hours = Math.floor((timeDiff % (1000*60*60*24)) / (1000*60*60));
+          const minutes = Math.floor((timeDiff % (1000*60*60)) / (1000*60));
+          const seconds = Math.floor((timeDiff % (1000*60)) / 1000);
+          setTimeLeft(`${hours}h ${minutes}m ${seconds}s`);
+        }
+      }, 1000);
+      return () => clearInterval(timer);
+    } else {
+      setTimeLeft('No bookings for today.');
+    }
+  }, [bookingDate, bookings]);
+
+  useEffect(() => {
+    if (timeLeft === 'Timer has passed.' || timeLeft === 'No more bookings for today.') {
+      window.location.href = 'https://react-ts-agora-uikit.vercel.app/';
+    }
+  }, [timeLeft]);
 
   return (
-    <div style={{textAlign:"center"}}>
-      
-   <br></br>
-   <table className="table">
-       
-       <tr>
-         <th>Booked Id</th>
-         <th>Booked Date</th>
-         <th>Booked Timeslot</th>
-         <th>User Id</th>
-         <th>Booked Status</th>
-         <th>Navatar ID</th>
-       </tr>
-       {times.map((post, i) => 
-         <tr key= "i">
-           <td> {post.booked_id} </td>
-           <td> {post.booked_date} </td>
-           <td>{post.booked_timeSlot}</td>
-           <td> {post.user_id} </td>
-           <td> {post.booked_status} </td>
-           <td>{post.navatar_id}</td>
-         </tr>
-       )}
-     </table>
-
-
-     <RedirectWithTimer link="https://react-ts-agora-uikit.vercel.app/" delay={10000} />
+    <div>
+      {timeLeft && <div>Time left: {timeLeft}</div>}
+      <table>
+        <thead>
+          <tr>
+            <th>Booking ID</th>
+            <th>User ID</th>
+            <th>Booking Date</th>
+            <th>Booking Time</th>
+            <th>Booking Status</th>
+            <th>Navatar ID</th>
+            <th>Appointment Status</th>
+          </tr>
+        </thead> 
+        <tbody>
+          {bookings.map(booking => (
+            <tr key={booking.booking_id}>
+              <td>{booking.booked_id}</td>
+              <td>{booking.user_id}</td>
+              <td>{booking.bookingDate}</td>
+              <td>{booking.booked_timeSlot}:00</td>
+              <td>{booking.booked_status}</td>
+              <td>{booking.navatar_id}</td>
+              <td>{booking.appt_status}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
