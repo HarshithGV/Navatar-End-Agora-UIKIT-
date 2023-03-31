@@ -51,13 +51,14 @@ function App() {
   }, [timeLeft]);
 
   return (
-    <div>
-      {timeLeft && <div>Time left: {timeLeft}</div>}
+    <div><br/>
+    <h1 style={{textAlign:"center"}}>{<div> {timeLeft}</div>}</h1>  
       <table>
         <thead>
           <tr>
             <th>Booking ID</th>
-            <th>User ID</th>
+            <th>User Profile</th>
+            <th>User Name</th>
             <th>Booking Date</th>
             <th>Booking Time</th>
             <th>Booking Status</th>
@@ -69,7 +70,8 @@ function App() {
           {bookings.map(booking => (
             <tr key={booking.booking_id}>
               <td>{booking.booked_id}</td>
-              <td>{booking.user_id}</td>
+              <td>{booking.user_photo_url}</td>
+              <td>{booking.user_name}</td>
               <td>{booking.bookingDate}</td>
               <td>{booking.booked_timeSlot}:00</td>
               <td>{booking.booked_status}</td>

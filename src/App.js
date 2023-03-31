@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 //  import Navbar from "./Components/Navbar";
 import Layouts from "./Components/Layouts";
 import Listofbooking from "./Components/Listofbooking";
+import Navatarcall from "./Components/Navatarcall";
+
 import './Components/index.css';
 
 import Login from "./Components/Login";
@@ -17,6 +19,7 @@ export default function App() {
 
 <Route index element={<Login/>}/>
 <Route path= "/listofbooking" element={<Listofbooking/>}/> 
+<Route path= "/navatarcall" element={<Navatarcall/>}/> 
 
 		</Routes>
 		</BrowserRouter>
