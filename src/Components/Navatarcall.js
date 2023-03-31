@@ -1,9 +1,10 @@
+
 import AgoraUIKit from "agora-react-uikit";
 import React, {useState} from "react";
-
+import './index.css';
 
 function App () {
-const [videoCall, setVideoCall] = useState(false);
+const [videoCall, setVideoCall] = useState(true);
 
 const rtcProps = {
     appId: "c924bd6fb57b44b1809c0746b78875d8",
