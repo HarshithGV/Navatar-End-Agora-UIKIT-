@@ -70,7 +70,7 @@ function App() {
           {bookings.map(booking => (
             <tr key={booking.booking_id}>
               <td>{booking.booked_id}</td>
-              <td><img src={booking.user_photo_url}></img></td>
+              <td><img style={{width: "100%"}} src={booking.user_photo_url}></img></td>
               <td>{booking.user_name}</td>
               <td>{booking.bookingDate}</td>
               <td>{booking.booked_timeSlot}:00</td>
