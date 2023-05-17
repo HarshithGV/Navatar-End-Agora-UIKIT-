@@ -20,7 +20,7 @@ function LoginForm() {
     console.log("password: ", password);
     try {
       const response = await axios.post(
-        "https://navatar.sangamone.com/NavatarLogin",
+        `https://navatar.sangamone.com/NavatarLogin?password=${password}&username=${username}`,
         {
           username: username,
           password: password,
@@ -44,7 +44,7 @@ function LoginForm() {
       {errorMessage && <div>{errorMessage}</div>}
       <div>
         <h1>Navatar Login</h1>
- 
+
         <input
           type="text"
           value={username}
@@ -53,22 +53,20 @@ function LoginForm() {
           required
         />
       </div>
-      <br></br>
+      <br />
       <div>
-        
         <input
           type="password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
-          placeholder="password"
+          placeholder="Password"
           required
         />
       </div>
-      <br></br>
-     <button to="/Home" type="submit" disabled={!isValid}>
+      <br />
+      <button to="/Home" type="submit" disabled={!isValid}>
         Login
       </button>
-   
     </form>
   );
 }
