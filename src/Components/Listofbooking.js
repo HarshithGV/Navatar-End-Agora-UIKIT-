@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
-function App() {
+function ListOfBooking() {
+  const location = useLocation();
   const [bookings, setBookings] = useState([]);
   const [bookingDate, setBookingDate] = useState(new Date().toISOString().slice(0, 10));
   const [timeLeft, setTimeLeft] = useState('');
 
   useEffect(() => {
-    fetch(`https://navatar.sangamone.com/getListOfBookingByIdandDate?bookingDate=${bookingDate}&navatar_id=1`)
+    const navatarid = location.state?.navatarid || 1;
+    fetch(`https://navatar.sangamone.com/getListOfBookingByIdandDate?bookingDate=${bookingDate}&navatar_id=${navatarid}`)
       .then(response => response.json())
       .then(data => setBookings(data))
       .catch(error => console.error(error));
-  }, [bookingDate]);
+  }, [bookingDate, location.state?.navatarid]);
 
   useEffect(() => {
     if (bookings.length > 0) {
@@ -85,4 +88,4 @@ function App() {
   );
 }
 
-export default App;
+export default ListOfBooking;

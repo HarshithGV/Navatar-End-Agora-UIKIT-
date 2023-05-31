@@ -29,7 +29,7 @@ function LoginForm() {
       console.log("response: ", response.data);
       if (response.status === 200 && response.data.token) {
         localStorage.setItem("token", response.data.token);
-        navigate("/Listofbooking");
+        navigate("/Listofbooking", { state: { navatarid: response.data.navatarid } });
       } else {
         navigate("/Listofbooking");
       }
